@@ -76,6 +76,9 @@ if (AMG_WITH_CALIPER)
   find_package(adiak REQUIRED)
   list(APPEND AMG_DEPENDENCIES
     adiak::adiak)
+  find_package(vernier REQUIRED)
+  list(APPEND AMG_DEPENDENCIES
+    vernier::vernier)
 endif()
 
 if (AMG_WITH_OMP)
