@@ -189,7 +189,7 @@ main( hypre_int argc,
    adiak_namevalue("compiler", adiak_general, NULL, "%s", AMG2023_COMPILER_ID);
    adiak_namevalue("compiler version", adiak_general, NULL, "%s", AMG2023_COMPILER_VERSION);
 
-   CALI_MARK_BEGIN("main");
+   HYPRE_ANNOTATE_REGION_BEGIN("main");
 #endif
 
    /*-----------------------------------------------------------
@@ -348,7 +348,7 @@ main( hypre_int argc,
     *-----------------------------------------------------------------*/
    hypre_bind_device(myid, num_procs, comm);
 #ifdef USE_CALIPER
-   CALI_MARK_BEGIN("Hypre init");
+   HYPRE_ANNOTATE_REGION_BEGIN("Hypre init");
 #endif
    time_index = hypre_InitializeTiming("Hypre init");
    hypre_BeginTiming(time_index);
@@ -363,7 +363,7 @@ main( hypre_int argc,
    hypre_FinalizeTiming(time_index);
    hypre_ClearTiming();
 #ifdef USE_CALIPER
-   CALI_MARK_END("Hypre init");
+   HYPRE_ANNOTATE_REGION_END("Hypre init");
 #endif
    /*-----------------------------------------------------------------
     * UMPIRE Pools
@@ -525,12 +525,12 @@ main( hypre_int argc,
 #ifdef USE_CALIPER
       adiak_namevalue("Problem", adiak_general, NULL, "%d", 2);
       adiak_namevalue("Solver", adiak_general, NULL, "%s", "PCG");
-      CALI_MARK_BEGIN("Problem");
+      HYPRE_ANNOTATE_REGION_BEGIN("Problem");
 #endif
       time_index = hypre_InitializeTiming("PCG Setup");
       hypre_MPI_Barrier(comm);
 #ifdef USE_CALIPER
-      CALI_MARK_BEGIN("Setup");
+      HYPRE_ANNOTATE_REGION_BEGIN("Setup");
 #endif
       hypre_BeginTiming(time_index);
       HYPRE_ParCSRPCGCreate(comm, &pcg_solver);
@@ -583,7 +583,7 @@ main( hypre_int argc,
       hypre_MPI_Barrier(comm);
       hypre_EndTiming(time_index);
 #ifdef USE_CALIPER
-      CALI_MARK_END("Setup");
+      HYPRE_ANNOTATE_REGION_END("Setup");
 #endif
       hypre_GetTiming("Problem 2: AMG Setup Time", &wall_time, comm);
       hypre_FinalizeTiming(time_index);
@@ -607,7 +607,7 @@ main( hypre_int argc,
       time_index = hypre_InitializeTiming("PCG Solve");
       hypre_MPI_Barrier(comm);
 #ifdef USE_CALIPER
-      CALI_MARK_BEGIN("Solve");
+      HYPRE_ANNOTATE_REGION_BEGIN("Solve");
 #endif
       hypre_BeginTiming(time_index);
 
@@ -617,7 +617,7 @@ main( hypre_int argc,
       hypre_MPI_Barrier(comm);
       hypre_EndTiming(time_index);
 #ifdef USE_CALIPER
-      CALI_MARK_END("Solve");
+      HYPRE_ANNOTATE_REGION_END("Solve");
 #endif
       hypre_GetTiming("Problem 2: AMG-PCG Solve Time", &wall_time, comm);
       hypre_FinalizeTiming(time_index);
@@ -651,7 +651,7 @@ main( hypre_int argc,
       }
 
 #ifdef USE_CALIPER
-      CALI_MARK_END("Problem");
+      HYPRE_ANNOTATE_REGION_END("Problem");
 #endif
    }
 
@@ -664,12 +664,12 @@ main( hypre_int argc,
 #ifdef USE_CALIPER
       adiak_namevalue("Problem", adiak_general, NULL, "%d", 1);
       adiak_namevalue("Solver", adiak_general, NULL, "%s", "GMRES");
-      CALI_MARK_BEGIN("Problem");
+      HYPRE_ANNOTATE_REGION_BEGIN("Problem");
 #endif
       time_index = hypre_InitializeTiming("GMRES Setup");
       hypre_MPI_Barrier(comm);
 #ifdef USE_CALIPER
-      CALI_MARK_BEGIN("Setup");
+      HYPRE_ANNOTATE_REGION_BEGIN("Setup");
 #endif
       hypre_BeginTiming(time_index);
 
@@ -720,7 +720,7 @@ main( hypre_int argc,
       hypre_MPI_Barrier(comm);
       hypre_EndTiming(time_index);
 #ifdef USE_CALIPER
-      CALI_MARK_END("Setup");
+      HYPRE_ANNOTATE_REGION_END("Setup");
 #endif
       hypre_GetTiming("Problem 1: AMG Setup Time", &wall_time, comm);
       hypre_FinalizeTiming(time_index);
@@ -743,7 +743,7 @@ main( hypre_int argc,
       time_index = hypre_InitializeTiming("GMRES Solve");
       hypre_MPI_Barrier(comm);
 #ifdef USE_CALIPER
-      CALI_MARK_BEGIN("Solve");
+      HYPRE_ANNOTATE_REGION_BEGIN("Solve");
 #endif
       hypre_BeginTiming(time_index);
 
@@ -752,7 +752,7 @@ main( hypre_int argc,
       hypre_MPI_Barrier(comm);
       hypre_EndTiming(time_index);
 #ifdef USE_CALIPER
-      CALI_MARK_END("Solve");
+      HYPRE_ANNOTATE_REGION_END("Solve");
 #endif
       hypre_GetTiming("Problem 1: AMG-GMRES Solve Time", &wall_time, comm);
       hypre_FinalizeTiming(time_index);
@@ -783,7 +783,7 @@ main( hypre_int argc,
          hypre_printf ("\n\nFigure of Merit (FOM): nnz_AP / (Setup Phase Time + Solve Phase Time) %e\n\n", FOM1);
       }
 #ifdef USE_CALIPER
-      CALI_MARK_END("Problem");
+      HYPRE_ANNOTATE_REGION_END("Problem");
 #endif
    }
 
@@ -828,7 +828,7 @@ main( hypre_int argc,
 #endif
 
 #ifdef USE_CALIPER
-   CALI_MARK_END("main");
+   HYPRE_ANNOTATE_REGION_END("main");
    adiak_fini();
 #endif
 
